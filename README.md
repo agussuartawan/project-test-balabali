@@ -62,7 +62,7 @@ Docker startup flow already does:
    ```
 6. Verify:
    - Health: `http://localhost:8080/health`
-   - Swagger UI: `http://localhost:8080/swagger/index.html`
+   - Swagger UI: `http://localhost:8080/docs`
 
 ## Useful Commands
 
