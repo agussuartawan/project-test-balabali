@@ -1,0 +1,294 @@
+basePath: /api
+definitions:
+  dto.OrderItemRequest:
+    properties:
+      productId:
+        type: integer
+      quantity:
+        minimum: 1
+        type: integer
+    required:
+    - productId
+    - quantity
+    type: object
+  dto.OrderRequest:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/dto.OrderItemRequest'
+        type: array
+    required:
+    - items
+    type: object
+  dto.ProductRequest:
+    properties:
+      name:
+        type: string
+      price:
+        type: integer
+      stock:
+        type: integer
+    required:
+    - name
+    - price
+    - stock
+    type: object
+  model.Product:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: integer
+      stock:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  response.OrderItemResponse:
+    properties:
+      price:
+        type: integer
+      product:
+        $ref: '#/definitions/response.ProductResponse'
+      quantity:
+        type: integer
+      subtotal:
+        type: integer
+    type: object
+  response.OrderResponse:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      orderItems:
+        items:
+          $ref: '#/definitions/response.OrderItemResponse'
+        type: array
+      status:
+        type: string
+      totalPrice:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  response.ProductResponse:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: integer
+    type: object
+  utils.BaseResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Project Test Balabali Backend API
+  title: Project Test Balabali Backend API
+  version: "1.0"
+paths:
+  /orders:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.BaseResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/response.OrderResponse'
+                  type: array
+              type: object
+      summary: Get all orders
+      tags:
+      - Orders
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create Order
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.OrderRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.BaseResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.OrderResponse'
+              type: object
+      summary: Create order
+      tags:
+      - Orders
+  /orders/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.BaseResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.OrderResponse'
+              type: object
+      summary: Get order by id
+      tags:
+      - Orders
+  /products:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.BaseResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Product'
+                  type: array
+              type: object
+      summary: Get all products
+      tags:
+      - Products
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create Product
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ProductRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.BaseResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Product'
+              type: object
+      summary: Create product
+      tags:
+      - Products
+  /products/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.BaseResponse'
+      summary: Delete product
+      tags:
+      - Products
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.BaseResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Product'
+              type: object
+      summary: Get product by id
+      tags:
+      - Products
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update Product
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ProductRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.BaseResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Product'
+              type: object
+      summary: Update product
+      tags:
+      - Products
+swagger: "2.0"

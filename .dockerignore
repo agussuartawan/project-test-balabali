@@ -1,0 +1,11 @@
+.git
+.gitignore
+.env
+README.md
+tmp
+bin
+dist
+node_modules
+coverage
+agent-transcripts
+terminals
