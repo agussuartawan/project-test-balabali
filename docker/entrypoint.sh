@@ -17,7 +17,7 @@ echo "Running database migrations..."
 migrate -path /app/migrations -database "${DATABASE_URL}" up
 
 echo "Generating OpenAPI docs..."
-swag init -g /app/cmd/api/main.go -o /app/docs
+swag init -g cmd/api/main.go -o docs
 
 echo "Starting API..."
 exec /app/api

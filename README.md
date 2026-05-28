@@ -11,7 +11,7 @@ Backend service for product and order management using Go, Echo, PostgreSQL, gol
 
 ### Option B - Run without Docker
 
-- Go 1.24+
+- Go 1.26.3+
 - PostgreSQL 16+
 - [golang-migrate CLI](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate)
 - [swag CLI](https://github.com/swaggo/swag)

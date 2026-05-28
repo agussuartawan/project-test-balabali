@@ -79,7 +79,7 @@ func (s *ProductService) validateProduct(product *dto.ProductRequest) error {
 	if product.Stock < 0 {
 		errors["stock"] = []string{"Stock cannot be negative"}
 	}
-	if product.Price < 0 {
+	if product.Price <= 0 {
 		errors["price"] = []string{"Price must be greater than 0"}
 	}
 
