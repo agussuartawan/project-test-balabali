@@ -2,8 +2,6 @@ package utils
 
 import (
 	"fmt"
-	"reflect"
-	"strings"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -17,11 +15,8 @@ func FormatValidationError(err error, s any) map[string][]string {
 		return errors
 	}
 
-	t := reflect.TypeOf(s)
-
 	for _, fieldError := range validationErrors {
-		field, _ := t.FieldByName(fieldError.StructField())
-		jsonTag := strings.Split(field.Tag.Get("json"), ",")[0]
+		field := fieldError.Field()
 
 		var message string
 		switch fieldError.Tag() {
@@ -37,7 +32,7 @@ func FormatValidationError(err error, s any) map[string][]string {
 			message = fmt.Sprintf("%s is invalid", field)
 		}
 
-		errors[jsonTag] = append(errors[jsonTag], message)
+		errors[field] = append(errors[field], message)
 	}
 
 	return errors

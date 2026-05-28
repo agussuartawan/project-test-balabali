@@ -9,7 +9,6 @@ import (
 	"github.com/agussuartawan/project-test-balabali/internal/scheduler"
 	"github.com/agussuartawan/project-test-balabali/internal/utils"
 	"github.com/agussuartawan/project-test-balabali/internal/validators"
-	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	echoSwagger "github.com/swaggo/echo-swagger"
 
@@ -30,7 +29,7 @@ func main() {
 	cronManager.Start()
 
 	e := echo.New()
-	e.Validator = &validators.CustomValidator{Validator: validator.New()}
+	e.Validator = validators.NewCustomValidator()
 
 	e.GET("/", func(c echo.Context) error {
 		return c.Redirect(http.StatusMovedPermanently, "/health")

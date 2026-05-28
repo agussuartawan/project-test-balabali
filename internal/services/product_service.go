@@ -25,8 +25,8 @@ func (s *ProductService) Create(c context.Context, product *dto.ProductRequest) 
 
 	productModel := &model.Product{
 		Name:  strings.TrimSpace(product.Name),
-		Stock: product.Stock,
-		Price: product.Price,
+		Stock: *product.Stock,
+		Price: *product.Price,
 	}
 
 	if err := s.productRepository.Create(c, productModel); err != nil {
@@ -55,8 +55,8 @@ func (s *ProductService) Update(c context.Context, id uint, product *dto.Product
 
 	productModel := &model.Product{
 		Name:  strings.TrimSpace(product.Name),
-		Stock: product.Stock,
-		Price: product.Price,
+		Stock: *product.Stock,
+		Price: *product.Price,
 	}
 
 	if err := s.productRepository.Update(c, id, productModel); err != nil {
@@ -76,10 +76,10 @@ func (s *ProductService) Delete(c context.Context, id uint) error {
 
 func (s *ProductService) validateProduct(product *dto.ProductRequest) error {
 	errors := make(map[string][]string)
-	if product.Stock < 0 {
+	if *product.Stock < 0 {
 		errors["stock"] = []string{"Stock cannot be negative"}
 	}
-	if product.Price <= 0 {
+	if *product.Price <= 0 {
 		errors["price"] = []string{"Price must be greater than 0"}
 	}
 

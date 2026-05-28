@@ -51,17 +51,17 @@ func (s *OrderService) Create(c context.Context, req *dto.OrderRequest) (*respon
 	for i, item := range req.Items {
 		var product model.Product
 		for _, p := range products {
-			if p.ID == item.ProductID {
+			if p.ID == *item.ProductID {
 				product = p
 				break
 			}
 		}
 
 		orderItems[i] = model.OrderItem{
-			ProductID: item.ProductID,
-			Quantity: item.Quantity,
+			ProductID: *item.ProductID,
+			Quantity: *item.Quantity,
 			Price: product.Price,
-			Subtotal: product.Price * int64(item.Quantity),
+			Subtotal: product.Price * int64(*item.Quantity),
 		}
 		totalPrice += orderItems[i].Subtotal
 	}
@@ -179,7 +179,7 @@ func (s *OrderService) ProcessOrder(c context.Context) error {
 func (s *OrderService) getProductIds(items []dto.OrderItemRequest) []uint {
 	productIds := make([]uint, len(items))
 	for i, item := range items {
-		productIds[i] = item.ProductID
+		productIds[i] = *item.ProductID
 	}
 	return productIds
 }
@@ -191,7 +191,7 @@ func (s *OrderService) validateOrder(order *dto.OrderRequest) error {
 	}
 
 	for _, item := range order.Items {
-		if item.Quantity <= 0 {
+		if *item.Quantity <= 0 {
 			errors["items"] = []string{"Quantity must be greater than 0"}
 		}
 	}

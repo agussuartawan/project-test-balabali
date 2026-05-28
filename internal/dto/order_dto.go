@@ -5,6 +5,6 @@ type OrderRequest struct {
 }
 
 type OrderItemRequest struct {
-	ProductID uint `json:"productId" validate:"required"`
-	Quantity  int  `json:"quantity" validate:"required,min=1"`
+	ProductID *uint `json:"productId" validate:"required"`
+	Quantity  *int  `json:"quantity" validate:"required"`
 }
